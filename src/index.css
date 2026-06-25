@@ -79,16 +79,12 @@ body::before {
   z-index: 1;
 }
 
-/* Thin, warm scrollbar for the horizontal timeline */
+/* Hide scrollbar on the timeline while keeping scroll functional */
+.timeline-scroll {
+  scrollbar-width: none; /* Firefox */
+}
 .timeline-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-.timeline-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.timeline-scroll::-webkit-scrollbar-thumb {
-  background: var(--color-sand);
-  border-radius: 9999px;
+  display: none; /* Chrome/Safari */
 }
 
 @media (prefers-reduced-motion: reduce) {
