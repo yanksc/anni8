@@ -25,15 +25,22 @@
 /* ---------------------------------------------------------------------------
    Base
 --------------------------------------------------------------------------- */
+html,
+body,
+#root {
+  height: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  overflow: hidden; /* the immersive stage owns the viewport */
   font-family: var(--font-sans);
   color: var(--color-ink);
-  background-color: var(--color-ivory);
+  background-color: var(--color-ink);
   /* Soft watercolor washes + faint paper grain (no external assets) */
   background-image:
     radial-gradient(

@@ -43,47 +43,48 @@ export default function Timeline({
   // Progress: how far along the user has explored (0 → 1).
   const progress =
     milestones.length > 1 ? activeIndex / (milestones.length - 1) : 1;
-  // clipPath reveals the gradient from left; 100% right-clip = hidden, 0% = fully visible.
   const rightClip = `${Math.round((1 - progress) * 1000) / 10}%`;
 
   return (
-    <div
-      ref={scrollRef}
-      className="timeline-scroll w-full overflow-x-auto pl-2 pr-4 sm:pr-6 pb-2"
-    >
+    <div className="mx-auto w-full max-w-5xl rounded-2xl border border-ivory/15 bg-ink/25 px-2 py-1 backdrop-blur-md sm:px-3">
       <div
-        ref={dotsRef}
-        className="relative mx-auto flex w-max min-w-full items-start justify-between gap-1"
+        ref={scrollRef}
+        className="timeline-scroll w-full overflow-x-auto pl-2 pr-4 sm:pr-6"
       >
-        {/* Timeline line: faint rail always visible; colorful gradient grows as you explore */}
-        <div className="pointer-events-none absolute left-0 right-0 top-[1.875rem] h-[2px] -translate-y-1/2">
-          {/* faint full-width rail — always visible */}
-          <div className="absolute inset-0 rounded-full bg-sand/50" />
-          {/* colorful progress line — revealed left-to-right as the user navigates */}
-          <motion.div
-            className="absolute inset-y-0 left-0 right-0 rounded-full"
-            initial={{ clipPath: "inset(0% 100% 0% 0%)" }}
-            animate={{ clipPath: `inset(0% ${rightClip} 0% 0%)` }}
-            transition={
-              reduceMotion
-                ? { duration: 0 }
-                : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-            }
-            style={{ background: lineGradient }}
-          />
-        </div>
+        <div
+          ref={dotsRef}
+          className="relative mx-auto flex w-max min-w-full items-start justify-between gap-1"
+        >
+          {/* Timeline line: faint rail always visible; colorful gradient grows as you explore */}
+          <div className="pointer-events-none absolute left-0 right-0 top-[1.875rem] h-[3px] -translate-y-1/2">
+            {/* faint full-width rail */}
+            <div className="absolute inset-0 rounded-full bg-ivory/25" />
+            {/* colorful progress line — revealed left-to-right as the user navigates */}
+            <motion.div
+              className="absolute inset-y-0 left-0 right-0 rounded-full"
+              initial={{ clipPath: "inset(0% 100% 0% 0%)" }}
+              animate={{ clipPath: `inset(0% ${rightClip} 0% 0%)` }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+              }
+              style={{ background: lineGradient }}
+            />
+          </div>
 
-        {milestones.map((m, i) => (
-          <TimelineDot
-            key={`${m.date}-${i}`}
-            milestone={m}
-            index={i}
-            isActive={i === activeIndex}
-            isPast={i < activeIndex}
-            isAnchor={m.date === WEDDING_DATE}
-            onSelect={onSelect}
-          />
-        ))}
+          {milestones.map((m, i) => (
+            <TimelineDot
+              key={`${m.date}-${i}`}
+              milestone={m}
+              index={i}
+              isActive={i === activeIndex}
+              isPast={i < activeIndex}
+              isAnchor={m.date === WEDDING_DATE}
+              onSelect={onSelect}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

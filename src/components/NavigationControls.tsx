@@ -5,7 +5,11 @@ interface NavigationControlsProps {
   onNext: () => void;
 }
 
-/** Prev / Next pills with a "milestone N of M" indicator. */
+/**
+ * Immersive navigation: large glass chevron buttons pinned to the screen
+ * edges, plus a compact "N of M" indicator. Rendered inside the full-screen
+ * stage (App positions the edge arrows absolutely).
+ */
 export default function NavigationControls({
   index,
   total,
@@ -16,47 +20,53 @@ export default function NavigationControls({
   const atEnd = index === total - 1;
 
   return (
-    <div className="flex items-center justify-center gap-4">
-      <NavButton direction="prev" disabled={atStart} onClick={onPrev} />
+    <>
+      {/* Edge arrows */}
+      <EdgeArrow side="left" disabled={atStart} onClick={onPrev} />
+      <EdgeArrow side="right" disabled={atEnd} onClick={onNext} />
 
-      <span className="min-w-[6.5rem] text-center font-sans text-xs tracking-wide text-ink-soft">
-        <span className="font-semibold text-ink">{index + 1}</span> of {total}
-      </span>
-
-      <NavButton direction="next" disabled={atEnd} onClick={onNext} />
-    </div>
+      {/* Position indicator */}
+      <div className="flex items-center justify-center">
+        <span className="rounded-full border border-ivory/20 bg-ink/30 px-3 py-1 font-sans text-xs tracking-wide text-ivory/80 backdrop-blur-md">
+          <span className="font-semibold text-ivory">{index + 1}</span> of{" "}
+          {total}
+        </span>
+      </div>
+    </>
   );
 }
 
-function NavButton({
-  direction,
+function EdgeArrow({
+  side,
   disabled,
   onClick,
 }: {
-  direction: "prev" | "next";
+  side: "left" | "right";
   disabled: boolean;
   onClick: () => void;
 }) {
-  const isPrev = direction === "prev";
+  const isLeft = side === "left";
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      aria-label={isPrev ? "Previous milestone" : "Next milestone"}
-      className="group inline-flex items-center gap-2 rounded-full border border-gold/40 bg-ivory/70 px-5 py-2.5 font-sans text-sm font-semibold text-ink shadow-soft transition hover:border-gold hover:bg-cream disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-gold/40 disabled:hover:bg-ivory/70"
+      aria-label={isLeft ? "Previous milestone" : "Next milestone"}
+      className={`absolute top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/25 bg-ink/30 text-ivory shadow-lg backdrop-blur-md transition hover:bg-ink/50 disabled:cursor-not-allowed disabled:opacity-0 sm:h-14 sm:w-14 ${
+        isLeft ? "left-3 sm:left-6" : "right-3 sm:right-6"
+      }`}
     >
-      {isPrev && <Arrow dir="left" />}
-      {isPrev ? "Previous" : "Next"}
-      {!isPrev && <Arrow dir="right" />}
+      <svg
+        viewBox="0 0 24 24"
+        className="h-6 w-6 sm:h-7 sm:w-7"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {isLeft ? <path d="M15 18l-6-6 6-6" /> : <path d="M9 6l6 6-6 6" />}
+      </svg>
     </button>
-  );
-}
-
-function Arrow({ dir }: { dir: "left" | "right" }) {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      {dir === "left" ? <path d="M15 18l-6-6 6-6" /> : <path d="M9 6l6 6-6 6" />}
-    </svg>
   );
 }

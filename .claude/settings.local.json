@@ -9,7 +9,11 @@
       "Bash(command -v corepack pnpm yarn bun)",
       "Bash(brew install *)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(grep -v '^--$')"
+      "Bash(grep -v '^--$')",
+      "Bash(gh repo *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }

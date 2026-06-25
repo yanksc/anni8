@@ -32,7 +32,6 @@ export default function TimelineDot({
   // Dots are invisible until the user has passed through them — except the
   // wedding-day anchor, which is always visible as a fixed landmark.
   const isRevealed = isActive || isPast || isAnchor;
-  // A future anchor = the wedding dot before the user has reached it.
   const isFutureAnchor = isAnchor && !isActive && !isPast;
 
   return (
@@ -41,69 +40,74 @@ export default function TimelineDot({
       onClick={() => onSelect(index)}
       aria-label={`${milestone.year} — ${milestone.title}`}
       aria-current={isActive ? "true" : undefined}
-      className="group relative flex w-20 shrink-0 flex-col items-center pt-4 outline-none sm:w-24"
+      className="group relative flex w-24 shrink-0 flex-col items-center pt-3 outline-none sm:w-28"
       style={{ pointerEvents: isRevealed ? "auto" : "none" }}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: isRevealed ? 1 : 0, y: 0 }}
       transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 0.55, ease: "easeOut" }
+        reduceMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }
       }
     >
-      {/* Dot */}
-      <span className="relative flex h-7 items-center justify-center">
+      {/* Dot zone */}
+      <span className="relative flex h-9 items-center justify-center">
         {/* Glow halo: full for active, soft shimmer for future anchor */}
         {(isActive || isFutureAnchor) && (
           <motion.span
             layoutId={isActive ? "dot-glow" : undefined}
             className="absolute rounded-full"
             style={{
-              width: isActive ? 36 : 28,
-              height: isActive ? 36 : 28,
-              background: `radial-gradient(circle, ${hexToRgba(color, isActive ? 0.45 : 0.25)}, transparent 70%)`,
+              width: isActive ? 48 : 34,
+              height: isActive ? 48 : 34,
+              background: `radial-gradient(circle, ${hexToRgba(
+                color,
+                isActive ? 0.6 : 0.3,
+              )}, transparent 70%)`,
             }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
           />
         )}
 
         <motion.span
-          className="relative rounded-full border-2 transition-colors"
+          className="relative rounded-full border-2"
           animate={{
-            width: isActive ? 20 : isFutureAnchor ? 15 : 12,
-            height: isActive ? 20 : isFutureAnchor ? 15 : 12,
+            width: isActive ? 28 : isFutureAnchor ? 20 : 16,
+            height: isActive ? 28 : isFutureAnchor ? 20 : 16,
           }}
           transition={{ type: "spring", stiffness: 280, damping: 22 }}
           style={{
             backgroundColor: isActive
               ? color
               : isFutureAnchor
-                ? hexToRgba(color, 0.45)
+                ? hexToRgba(color, 0.5)
                 : isPast
-                  ? hexToRgba(color, 0.6)
-                  : "var(--color-ivory)",
+                  ? hexToRgba(color, 0.85)
+                  : "rgba(255,255,255,0.15)",
             borderColor:
-              isActive || isPast || isAnchor ? color : "var(--color-sand)",
-            boxShadow: isActive ? `0 0 0 4px ${hexToRgba(color, 0.18)}` : "none",
+              isActive || isPast || isAnchor
+                ? color
+                : "rgba(255,255,255,0.4)",
+            boxShadow: isActive
+              ? `0 0 0 5px ${hexToRgba(color, 0.22)}, 0 4px 12px rgba(0,0,0,0.4)`
+              : "0 2px 6px rgba(0,0,0,0.3)",
           }}
         />
 
-        {/* Pulse ring: fast for active, slow gentle shimmer for future anchor */}
+        {/* Pulse ring: fast for active, slow shimmer for future anchor */}
         {isActive && !reduceMotion && (
           <motion.span
             className="absolute rounded-full border"
             style={{ borderColor: color }}
-            initial={{ width: 20, height: 20, opacity: 0.5 }}
-            animate={{ width: 40, height: 40, opacity: 0 }}
+            initial={{ width: 28, height: 28, opacity: 0.5 }}
+            animate={{ width: 56, height: 56, opacity: 0 }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
           />
         )}
         {isFutureAnchor && !reduceMotion && (
           <motion.span
             className="absolute rounded-full border"
-            style={{ borderColor: color, borderStyle: "solid", borderWidth: 1 }}
-            initial={{ width: 15, height: 15, opacity: 0.35 }}
-            animate={{ width: 36, height: 36, opacity: 0 }}
+            style={{ borderColor: color, borderWidth: 1 }}
+            initial={{ width: 20, height: 20, opacity: 0.35 }}
+            animate={{ width: 46, height: 46, opacity: 0 }}
             transition={{
               duration: 3,
               repeat: Infinity,
@@ -118,8 +122,8 @@ export default function TimelineDot({
       {isAnchor && (
         <span
           aria-hidden
-          className="mt-0.5 text-[10px] leading-none transition-opacity"
-          style={{ color, opacity: isActive ? 1 : isFutureAnchor ? 0.55 : 0.6 }}
+          className="mt-1 text-xs leading-none"
+          style={{ color, opacity: isActive ? 1 : isFutureAnchor ? 0.6 : 0.75 }}
         >
           ♥
         </span>
@@ -127,12 +131,12 @@ export default function TimelineDot({
 
       {/* Year label */}
       <span
-        className={`mt-1 max-w-full truncate px-0.5 text-center font-sans text-[10px] leading-tight tracking-wide transition-colors sm:text-[11px] ${
+        className={`mt-1 max-w-full truncate px-0.5 text-center font-sans text-[11px] leading-tight tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] transition-colors sm:text-xs ${
           isActive
-            ? "font-semibold text-ink"
+            ? "font-semibold text-ivory"
             : isFutureAnchor
-              ? "text-ink-soft/70"
-              : "text-ink-soft group-hover:text-ink"
+              ? "text-ivory/60"
+              : "text-ivory/75 group-hover:text-ivory"
         }`}
       >
         {milestone.year}
