@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(command -v fnm volta)",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//usr/local/**)",
+      "Bash(command -v brew port)",
+      "Bash(command -v corepack pnpm yarn bun)",
+      "Bash(brew install *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(grep -v '^--$')"
+    ]
+  }
+}

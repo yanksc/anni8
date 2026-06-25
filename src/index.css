@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Theme tokens — warm, dreamy, nostalgic palette (cream / ivory / gold)
+   Tailwind v4 reads these as utilities, e.g. bg-cream, text-ink, border-gold
+--------------------------------------------------------------------------- */
+@theme {
+  --color-ivory: #fbf7ef;
+  --color-cream: #f6efe1;
+  --color-beige: #ece0cb;
+  --color-sand: #e2d2b6;
+  --color-gold: #c79a4b;
+  --color-gold-soft: #ddbd7e;
+  --color-ink: #5a4a36;
+  --color-ink-soft: #8a7860;
+  --color-rose: #d8a59a;
+
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 18px 40px -20px rgba(120, 95, 55, 0.45);
+  --shadow-card: 0 30px 60px -30px rgba(120, 95, 55, 0.55);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background-color: var(--color-ivory);
+  /* Soft watercolor washes + faint paper grain (no external assets) */
+  background-image:
+    radial-gradient(
+      55rem 40rem at 12% -8%,
+      rgba(221, 189, 126, 0.28),
+      transparent 60%
+    ),
+    radial-gradient(
+      50rem 45rem at 105% 8%,
+      rgba(216, 165, 154, 0.22),
+      transparent 55%
+    ),
+    radial-gradient(
+      60rem 50rem at 50% 120%,
+      rgba(226, 210, 182, 0.4),
+      transparent 60%
+    );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint paper grain overlay applied via ::before so it never blocks clicks */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Thin, warm scrollbar for the horizontal timeline */
+.timeline-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-sand);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
