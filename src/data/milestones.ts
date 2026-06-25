@@ -327,6 +327,17 @@ export const milestones: Milestone[] = [
     dotColor: "#C4A890", // warm sand
   },
   {
+    date: "2026-03-01",
+    approximate: true,
+    year: "March 2026",
+    title: "Back to Taiwan",
+    location: "Taiwan",
+    description:
+      "A trip back to Taiwan in March 2026 — family, familiar streets, and the warmth of home that always finds us no matter how far we've traveled.",
+    images: ["/images/back to Taiwan.jpg"],
+    dotColor: "#B4A8C4", // soft lavender
+  },
+  {
     date: "2026-06-23",
     year: "June 23, 2026",
     title: "Eight Years Together",
