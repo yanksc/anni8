@@ -196,11 +196,11 @@ export const milestones: Milestone[] = [
     date: "2020-08-01",
     approximate: true,
     year: "August 2020",
-    title: "Higby Apartment",
+    title: "Expecting Aidan",
     location: "Berkeley, California",
     description:
-      "We moved to the Higby apartment in Berkeley, another home that became part of our story.",
-    images: ["/images/higby.png"],
+      "We were expecting our first child at the Higby apartment in Berkeley — a quiet anticipation, a home filling with hope before it filled with laughter.",
+    images: ["/images/higby.JPG"],
     dotColor: "#98A8A0", // gray-sage
   },
   {
