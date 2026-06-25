@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Milestone } from "../data/milestones";
-import { daysFromWedding } from "../utils/dateUtils";
+import { daysFromWedding, imageUrl } from "../utils/dateUtils";
 import PhotoPlaceholder from "./PhotoPlaceholder";
 
 function hexToRgba(hex: string, alpha: number) {
@@ -70,7 +70,7 @@ export default function MilestoneSlide({
           >
             {hasPhotos ? (
               <img
-                src={milestone.images[0]}
+                src={imageUrl(milestone.images[0])}
                 alt={milestone.title}
                 className="h-full w-full object-contain"
               />

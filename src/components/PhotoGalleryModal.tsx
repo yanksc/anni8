@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Milestone } from "../data/milestones";
+import { imageUrl } from "../utils/dateUtils";
 import PhotoPlaceholder from "./PhotoPlaceholder";
 
 interface PhotoGalleryModalProps {
@@ -96,9 +97,9 @@ export default function PhotoGalleryModal({
                   >
                     {hasPhotos ? (
                       <img
-                        src={milestone.images[index]}
+                        src={imageUrl(milestone.images[index])}
                         alt={`${milestone.title} — ${index + 1}`}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-contain"
                       />
                     ) : (
                       <PhotoPlaceholder milestone={milestone} />

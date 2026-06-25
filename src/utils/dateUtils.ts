@@ -30,3 +30,12 @@ export function formatCount(days: number): string {
   const sign = days < 0 ? "−" : ""; // − (minus sign, not hyphen)
   return sign + Math.abs(days).toLocaleString("en-US");
 }
+
+/**
+ * Resolve an image path stored in milestones (e.g. "/images/foo.jpg") to a
+ * URL that works both in local dev ("/images/foo.jpg") and on GitHub Pages
+ * ("/anni8/images/foo.jpg"). Vite exposes the configured base via BASE_URL.
+ */
+export function imageUrl(path: string): string {
+  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+}
