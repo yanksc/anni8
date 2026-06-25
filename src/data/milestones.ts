@@ -285,6 +285,16 @@ export const milestones: Milestone[] = [
     dotColor: "#C8B498", // warm champagne-gold
   },
   {
+    date: "2025-05-10",
+    year: "May 10, 2025",
+    title: "Family Trip to Hawaii",
+    location: "Maui, Hawaii",
+    description:
+      "We brought the family to Maui — ocean air, lei around our necks, Aidan by our side. A memory made together before the summer ahead.",
+    images: ["/images/hawaii-may-2026.webp"],
+    dotColor: "#8AB4C4", // ocean blue
+  },
+  {
     date: "2025-08-04",
     year: "August 4, 2025",
     title: "Family Trip to Yellowstone",
@@ -293,16 +303,6 @@ export const milestones: Milestone[] = [
       "A summer adventure to Yellowstone with grandparents, Aidan, and Asher. We watched Old Faithful together and realized that the best memories are the ones made as a whole family.",
     images: ["/images/yellowstone-aug-2025.webp"],
     dotColor: "#96A892", // earthy sage
-  },
-  {
-    date: "2026-05-10",
-    year: "May 10, 2026",
-    title: "Family Trip to Hawaii",
-    location: "Maui, Hawaii",
-    description:
-      "We brought the family to Maui — ocean air, lei around our necks, Aidan by our side. A warm send-off to the year before our 8th anniversary.",
-    images: ["/images/hawaii-may-2026.webp"],
-    dotColor: "#8AB4C4", // ocean blue
   },
   {
     date: "2026-06-23",
