@@ -55,7 +55,7 @@ export default function Timeline({
           className="relative mx-auto flex w-max min-w-full items-start justify-between gap-1"
         >
           {/* Timeline line: faint rail always visible; colorful gradient grows as you explore */}
-          <div className="pointer-events-none absolute left-0 right-0 top-[1.875rem] h-[3px] -translate-y-1/2">
+          <div className="pointer-events-none absolute left-0 right-0 top-[2.4375rem] h-[3px] -translate-y-1/2">
             {/* faint full-width rail */}
             <div className="absolute inset-0 rounded-full bg-ivory/25" />
             {/* colorful progress line — revealed left-to-right as the user navigates */}

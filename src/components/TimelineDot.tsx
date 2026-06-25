@@ -11,6 +11,22 @@ interface TimelineDotProps {
   onSelect: (index: number) => void;
 }
 
+function shortCity(location: string): string {
+  // e.g. "Yellowstone National Park" → "Yellowstone"
+  const parkMatch = location.match(/^(.+?)\s+(?:National|State)\b/);
+  if (parkMatch) return parkMatch[1].trim();
+
+  const parts = location.split(",").map((s) => s.trim());
+  const first = parts[0];
+  // If first part looks like a venue or long address, prefer the next segment
+  const isVenue =
+    first.length > 12 ||
+    /University|Campus|Beach|Avenue|Road|Street/i.test(first);
+  const city = isVenue && parts[1] ? parts[1] : first;
+  // Drop secondary parts like "Albany / Berkeley" → "Albany"
+  return city.split(/\s*[/·&]\s*|\s+and\s+/)[0].trim();
+}
+
 function hexToRgba(hex: string, alpha: number) {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -40,7 +56,7 @@ export default function TimelineDot({
       onClick={() => onSelect(index)}
       aria-label={`${milestone.year} — ${milestone.title}`}
       aria-current={isActive ? "true" : undefined}
-      className="group relative flex w-24 shrink-0 flex-col items-center pt-3 outline-none sm:w-28"
+      className="group relative flex w-24 shrink-0 flex-col items-center pt-2 outline-none sm:w-28"
       style={{ pointerEvents: isRevealed ? "auto" : "none" }}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: isRevealed ? 1 : 0, y: 0 }}
@@ -48,6 +64,15 @@ export default function TimelineDot({
         reduceMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }
       }
     >
+      {/* City label */}
+      <span
+        className={`mb-1 max-w-full truncate px-0.5 text-center font-sans text-[9px] leading-none tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] ${
+          isActive ? "text-ivory/90" : "text-ivory/45"
+        }`}
+      >
+        {shortCity(milestone.location)}
+      </span>
+
       {/* Dot zone */}
       <span className="relative flex h-9 items-center justify-center">
         {/* Glow halo: full for active, soft shimmer for future anchor */}
