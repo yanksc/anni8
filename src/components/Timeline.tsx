@@ -46,11 +46,10 @@ export default function Timeline({
   const rightClip = `${Math.round((1 - progress) * 1000) / 10}%`;
 
   return (
-    <div className="mx-auto w-full max-w-5xl rounded-2xl border border-ivory/15 bg-ink/25 px-2 py-1 backdrop-blur-md sm:px-3">
-      <div
-        ref={scrollRef}
-        className="timeline-scroll w-full overflow-x-auto pl-2 pr-4 sm:pr-6"
-      >
+    <div
+      ref={scrollRef}
+      className="timeline-scroll w-full overflow-x-auto"
+    >
         <div
           ref={dotsRef}
           className="relative mx-auto flex w-max min-w-full items-start justify-between gap-1"
@@ -85,7 +84,6 @@ export default function Timeline({
             />
           ))}
         </div>
-      </div>
     </div>
   );
 }

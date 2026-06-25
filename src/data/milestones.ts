@@ -235,6 +235,17 @@ export const milestones: Milestone[] = [
     dotColor: "#C4B4A0", // warm sand-taupe
   },
   {
+    date: "2023-07-01",
+    approximate: true,
+    year: "July 2023",
+    title: "Visiting Yosemite",
+    location: "Yosemite National Park, California",
+    description:
+      "A summer trip to Yosemite with the family. Granite walls, waterfalls, and wide-open skies — a reminder of how big and beautiful the world is just a few hours from home.",
+    images: ["/images/visiting Yosemite.jpg"],
+    dotColor: "#96A87E", // earthy olive-green
+  },
+  {
     date: "2023-11-26",
     year: "November 26, 2023",
     title: "Italy — Visiting Rueben",
@@ -277,8 +288,8 @@ export const milestones: Milestone[] = [
   {
     date: "2025-01-04",
     year: "January 4, 2025",
-    title: "Family Portrait",
-    location: "San Jose, California",
+    title: "Trip back to Taiwan",
+    location: "Taichung, Taiwan",
     description:
       "A family portrait to mark the new year — now a family of four, dressed up for Christmas, glowing in the light of the tree. This is what we built.",
     images: ["/images/family-portrait-jan-2025.webp"],
@@ -303,6 +314,17 @@ export const milestones: Milestone[] = [
       "A summer adventure to Yellowstone with grandparents, Aidan, and Asher. We watched Old Faithful together and realized that the best memories are the ones made as a whole family.",
     images: ["/images/yellowstone-aug-2025.webp"],
     dotColor: "#96A892", // earthy sage
+  },
+  {
+    date: "2025-12-01",
+    approximate: true,
+    year: "December 2025",
+    title: "Visiting Texas",
+    location: "Texas",
+    description:
+      "A December trip to Texas with the whole family — warm reunions, big skies, and the kind of time together that feels easy and full.",
+    images: ["/images/visiting Texas.jpg"],
+    dotColor: "#C4A890", // warm sand
   },
   {
     date: "2026-06-23",
