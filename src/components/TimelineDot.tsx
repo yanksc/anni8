@@ -75,35 +75,47 @@ export default function TimelineDot({
 
       {/* Dot zone */}
       <span className="relative flex h-9 items-center justify-center">
-        {/* Glow halo: full for active, soft shimmer for future anchor */}
+        {/* Outer glow halo */}
         {(isActive || isFutureAnchor) && (
           <motion.span
             layoutId={isActive ? "dot-glow" : undefined}
             className="absolute rounded-full"
             style={{
-              width: isActive ? 48 : 34,
-              height: isActive ? 48 : 34,
+              width: isActive ? (isAnchor ? 64 : 48) : 58,
+              height: isActive ? (isAnchor ? 64 : 48) : 58,
               background: `radial-gradient(circle, ${hexToRgba(
                 color,
-                isActive ? 0.6 : 0.3,
-              )}, transparent 70%)`,
+                isActive ? (isAnchor ? 0.75 : 0.6) : 0.5,
+              )}, transparent 68%)`,
             }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
+          />
+        )}
+
+        {/* Inner bright halo — wedding anchor only */}
+        {isAnchor && (
+          <span
+            className="absolute rounded-full"
+            style={{
+              width: 32,
+              height: 32,
+              background: `radial-gradient(circle, ${hexToRgba(color, isActive ? 0.9 : 0.65)}, transparent 60%)`,
+            }}
           />
         )}
 
         <motion.span
           className="relative rounded-full border-2"
           animate={{
-            width: isActive ? 28 : isFutureAnchor ? 20 : 16,
-            height: isActive ? 28 : isFutureAnchor ? 20 : 16,
+            width: isActive ? 28 : isFutureAnchor ? 24 : 16,
+            height: isActive ? 28 : isFutureAnchor ? 24 : 16,
           }}
           transition={{ type: "spring", stiffness: 280, damping: 22 }}
           style={{
             backgroundColor: isActive
               ? color
               : isFutureAnchor
-                ? hexToRgba(color, 0.5)
+                ? hexToRgba(color, isAnchor ? 0.72 : 0.5)
                 : isPast
                   ? hexToRgba(color, 0.85)
                   : "rgba(255,255,255,0.15)",
@@ -112,34 +124,43 @@ export default function TimelineDot({
                 ? color
                 : "rgba(255,255,255,0.4)",
             boxShadow: isActive
-              ? `0 0 0 5px ${hexToRgba(color, 0.22)}, 0 4px 12px rgba(0,0,0,0.4)`
-              : "0 2px 6px rgba(0,0,0,0.3)",
+              ? isAnchor
+                ? `0 0 0 5px ${hexToRgba(color, 0.3)}, 0 0 20px 4px ${hexToRgba(color, 0.45)}, 0 4px 12px rgba(0,0,0,0.4)`
+                : `0 0 0 5px ${hexToRgba(color, 0.22)}, 0 4px 12px rgba(0,0,0,0.4)`
+              : isFutureAnchor
+                ? `0 0 0 3px ${hexToRgba(color, 0.2)}, 0 0 14px 2px ${hexToRgba(color, 0.35)}, 0 2px 8px rgba(0,0,0,0.35)`
+                : "0 2px 6px rgba(0,0,0,0.3)",
           }}
         />
 
-        {/* Pulse ring: fast for active, slow shimmer for future anchor */}
+        {/* Pulse rings */}
         {isActive && !reduceMotion && (
           <motion.span
             className="absolute rounded-full border"
-            style={{ borderColor: color }}
-            initial={{ width: 28, height: 28, opacity: 0.5 }}
-            animate={{ width: 56, height: 56, opacity: 0 }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+            style={{ borderColor: color, borderWidth: isAnchor ? 1.5 : 1 }}
+            initial={{ width: 28, height: 28, opacity: isAnchor ? 0.7 : 0.5 }}
+            animate={{ width: isAnchor ? 66 : 56, height: isAnchor ? 66 : 56, opacity: 0 }}
+            transition={{ duration: isAnchor ? 2.2 : 1.8, repeat: Infinity, ease: "easeOut" }}
           />
         )}
+        {/* Wedding anchor: always has two slow glowing rings */}
         {isFutureAnchor && !reduceMotion && (
-          <motion.span
-            className="absolute rounded-full border"
-            style={{ borderColor: color, borderWidth: 1 }}
-            initial={{ width: 20, height: 20, opacity: 0.35 }}
-            animate={{ width: 46, height: 46, opacity: 0 }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: 0.8,
-            }}
-          />
+          <>
+            <motion.span
+              className="absolute rounded-full border"
+              style={{ borderColor: color, borderWidth: 1.5 }}
+              initial={{ width: 24, height: 24, opacity: 0.55 }}
+              animate={{ width: 54, height: 54, opacity: 0 }}
+              transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut" }}
+            />
+            <motion.span
+              className="absolute rounded-full border"
+              style={{ borderColor: color, borderWidth: 1 }}
+              initial={{ width: 24, height: 24, opacity: 0.35 }}
+              animate={{ width: 72, height: 72, opacity: 0 }}
+              transition={{ duration: 3.8, repeat: Infinity, ease: "easeOut", delay: 1.2 }}
+            />
+          </>
         )}
       </span>
 
@@ -147,8 +168,14 @@ export default function TimelineDot({
       {isAnchor && (
         <span
           aria-hidden
-          className="mt-1 text-xs leading-none"
-          style={{ color, opacity: isActive ? 1 : isFutureAnchor ? 0.6 : 0.75 }}
+          className={`leading-none ${isActive || isFutureAnchor ? "mt-1 text-sm" : "mt-1 text-xs"}`}
+          style={{
+            color,
+            opacity: isActive ? 1 : isFutureAnchor ? 0.9 : 0.8,
+            textShadow: isFutureAnchor || isActive
+              ? `0 0 8px ${hexToRgba(color, 0.8)}, 0 0 20px ${hexToRgba(color, 0.5)}`
+              : "none",
+          }}
         >
           ♥
         </span>
